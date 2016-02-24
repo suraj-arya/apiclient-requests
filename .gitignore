@@ -1,0 +1,41 @@
+*.py[cod]
+
+# Packages
+*.egg
+*.egg-info
+build
+eggs
+parts
+bin
+var
+sdist
+.installed.cfg
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+.coverage
+.tox
+nosetests.xml
+
+# Translations
+*.mo
+
+output/*.html
+output/*/index.html
+
+# Sphinx
+docs/_build
+
+.webassets-cache
+
+# Virtualenvs
+env/
+
+
+#Pycharm
+.idea/*
+.DS_Store
+
+.envconfig/
