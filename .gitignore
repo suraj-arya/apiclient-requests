@@ -9,6 +9,7 @@ parts
 bin
 var
 sdist
+dist
 .installed.cfg
 
 # Installer logs
