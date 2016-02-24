@@ -12,7 +12,7 @@ setup(
     ],
     author='Suraj Arya',
     author_email='suraj.p.arya@gmail.com',
-    description='A simple python client for the perfios APIs',
+    description='A simple python base package for building good api clients on',
     url='https://github.com/suraj-arya/apiclient-requests',
     license='MIT',
 
