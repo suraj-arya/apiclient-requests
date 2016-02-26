@@ -22,6 +22,7 @@ class APIClient(object):
         @param base_url: string: required
         @param api_key: string
         @param auth_header: string: name of header for authentication
+        @param accept_type: string: default is json
         """
         self._base_url = kwargs.get('base_url', None)
         assert self._base_url, "Must pass the base_url"
@@ -68,7 +69,6 @@ class APIClient(object):
                 return response.text
 
         else:
-            #Log error message
             if status_code in exception_cls_map:
                 execption_cls = exception_cls_map[status_code]
                 raise execption_cls(response.json())
