@@ -15,14 +15,13 @@ CODES_ACCEPTED = (requests.codes.ok, requests.codes.accepted,
 
 
 class APIClient(object):
-    
+
     def __init__(self, **kwargs):
         """
         acceptable arguments are listed below
         @param base_url: string: required
         @param api_key: string
         @param auth_header: string: name of header for authentication
-        @param accept_type: string: default is json
         """
         self._base_url = kwargs.get('base_url', None)
         assert self._base_url, "Must pass the base_url"
@@ -30,7 +29,7 @@ class APIClient(object):
         self._api_key = kwargs.get('api_key', None)
         self._auth_header_name = kwargs.get('auth_header', None)
 
-        self.accept_type = kwargs.get('accept_type', 'application/json')
+        self.headers = self.get_headers(kwargs.get('headers', {}))
 
     def call(self, resource_path, method='get', data=None,
              params=None):
@@ -38,23 +37,25 @@ class APIClient(object):
         url = '/'.join([self._base_url, resource_path])
 
         method = getattr(requests, method)
-        headers = self.get_headers()
+        headers = self.headers
 
         response = method(url, data=data, params=params, headers=headers)
         return self._parse_response(response)
 
-    def get_headers(self):
+    def get_headers(self, additional_headers):
         """
         returns the headers to be sent along with the request
         override for adding your own list of headers
         """
         headers = {
-            'Accept': self.accept_type,
+            'Accept': additional_headers.get('Accept', 'application/json'),
             'Content-Type': 'application/json'
         }
 
         if self._api_key and self._auth_header_name:
             headers[self._auth_header_name] = self._api_key
+
+        headers.update(additional_headers)
 
         return headers
 
@@ -69,6 +70,7 @@ class APIClient(object):
                 return response.text
 
         else:
+            #Log error message
             if status_code in exception_cls_map:
                 execption_cls = exception_cls_map[status_code]
                 raise execption_cls(response.json())
