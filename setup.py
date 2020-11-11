@@ -17,6 +17,6 @@ setup(
     license='MIT',
 
     install_requires=[
-        "requests==2.5.1"
+        "requests==2.20.0"
     ],
 )
